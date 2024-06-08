@@ -10,3 +10,4 @@ declare var $: any
 export class AppComponent {
   title = 'ETicaretClient';
 }
+
