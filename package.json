@@ -24,6 +24,7 @@
     "alertifyjs": "^1.14.0",
     "bootstrap": "^5.3.3",
     "jquery": "^3.7.1",
+    "ngx-spinner": "^13.1.1",
     "ngx-toastr": "^14.3.0",
     "popper.js": "^1.16.1",
     "rxjs": "~7.5.0",
