@@ -8,6 +8,8 @@ import { AlertifyService, MessageType, Position } from 'src/app/services/admin/a
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { BasketsComponent } from 'src/app/ui/components/baskets/baskets.component';
 
+
+declare var $:any;
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -22,7 +24,7 @@ export class ListComponent extends BasketsComponent implements OnInit {
 
 
 
-  displayedColumns: string[] = ['name', 'stock', 'price', 'createDate', 'updateDate'];
+  displayedColumns: string[] = ['name', 'stock', 'price', 'createDate', 'updateDate', 'edit', 'delete'];
   dataSource: MatTableDataSource<List_Product> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -36,12 +38,16 @@ export class ListComponent extends BasketsComponent implements OnInit {
         position: Position.BottomRight
       }))
     this.dataSource = new MatTableDataSource<List_Product>(allPoroducts.products);
-    this.paginator.length=allPoroducts.totalCount;
+    this.paginator.length = allPoroducts.totalCount;
   }
 
-  async pageChange(){
+  async pageChange() {
     await this.getProducts();
   }
+  // delete(id, event) {
+  //   const img:HTMLImageElement=event.srcElement;
+  //   $(img.parentElement.parentElement).fadeOut(2000)
+  // }
 
   override async ngOnInit() {
     await this.getProducts();
