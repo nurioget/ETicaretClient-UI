@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgxFileDropEntry } from 'ngx-file-drop';
+import { HttpClientService } from '../http-client.service';
+import { AlertifyService, MessageType, Position } from '../../admin/alertify.service';
+
+import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CustomToastrService, TosterMessageType, TosterPosition } from '../../ui/custom-toastr.service';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { SpinnerType } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-file-upload',
@@ -7,52 +15,73 @@ import { NgxFileDropEntry } from 'ngx-file-drop';
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
+  constructor(
+    private httpClientService: HttpClientService,
+    private alertifyService: AlertifyService,
+    private customToastrService: CustomToastrService,
+    private dialog: MatDialog,
+    private spinner: NgxSpinnerService) { }
 
-  public files: NgxFileDropEntry[] = [];
+  public files: NgxFileDropEntry[];
 
-  public dropped(files: NgxFileDropEntry[]) {
+  @Input() options: Partial<FileUploadOptions>;
+
+  public selectedFiles(files: NgxFileDropEntry[]) {
     this.files = files;
-    for (const droppedFile of files) {
-
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-
-          /**
-          // You could upload it like this:
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
-
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
-
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
-
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
+    const fileData: FormData = new FormData();
+    for (const file of files) {
+      (file.fileEntry as FileSystemFileEntry).file((_file: File) => {
+        fileData.append(_file.name, _file, file.relativePath);
+      });
     }
-  }
+    this.httpClientService.post({
+      controller: this.options.controller,
+      action: this.options.action,
+      queryString: this.options.queryString,
+      headers: new HttpHeaders({ "responseType": "blob" })
+    }, fileData).subscribe(data => {
+      const message: string = "Dosyalar başarıyla yüklenmiştir.";
+      if (this.options.isAdminPage) {
+        this.alertifyService.message(message,
+          {
+            dismissOthers: true,
+            messageType: MessageType.Success,
+            position: Position.BottomRight
+          })
+      } else {
+        this.customToastrService.message(message, "Başarılı.", {
+          messageType: TosterMessageType.Success,
+          position: TosterPosition.BottomRight
+        })
+      }
 
-  public fileOver(event) {
-    console.log(event);
+    }, (errorResponse: HttpErrorResponse) => {
+      const message: string = "Dosyalar yüklenirken beklenmeyen bir hatayla karşılaşılmıştır.";
+      this.spinner.hide(SpinnerType.BallAtom)
+      if (this.options.isAdminPage) {
+        this.alertifyService.message(message,
+          {
+            dismissOthers: true,
+            messageType: MessageType.Error,
+            position: Position.BottomRight
+          })
+      } else {
+        this.customToastrService.message(message, "Başarsız.", {
+          messageType: TosterMessageType.Error,
+          position: TosterPosition.BottomRight
+        })
+      }
+    });
   }
+}
 
-  public fileLeave(event) {
-    console.log(event);
-  }
 
+
+export class FileUploadOptions {
+  controller?: string;
+  action?: string;
+  queryString?: string;
+  explanation?: string;
+  accept?: string;
+  isAdminPage?: boolean = false;
 }

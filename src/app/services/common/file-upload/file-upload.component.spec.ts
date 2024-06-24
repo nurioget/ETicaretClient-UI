@@ -11,9 +11,7 @@ describe('FileUploadComponent', () => {
       declarations: [ FileUploadComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FileUploadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
