@@ -24,6 +24,7 @@
     "alertifyjs": "^1.14.0",
     "bootstrap": "^5.3.3",
     "jquery": "^3.7.1",
+    "ngx-file-drop": "^14.0.2",
     "ngx-spinner": "^13.1.1",
     "ngx-toastr": "^14.3.0",
     "popper.js": "^1.16.1",
@@ -43,6 +44,6 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.6.2"
+    "typescript": "4.4"
   }
 }
