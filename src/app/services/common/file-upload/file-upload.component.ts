@@ -23,7 +23,8 @@ export class FileUploadComponent {
     private customToastrService: CustomToastrService,
     private dialog: MatDialog,
     private spinner: NgxSpinnerService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService,
+  ) { }
 
   public files: NgxFileDropEntry[];
 
@@ -65,6 +66,7 @@ export class FileUploadComponent {
               position: TosterPosition.TopRight
             })
           }
+          
 
 
         }, (errorResponse: HttpErrorResponse) => {
