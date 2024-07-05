@@ -22,7 +22,7 @@
     "@angular/router": "^14.3.0",
     "@popperjs/core": "^2.11.8",
     "alertifyjs": "^1.14.0",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "4.3",
     "jquery": "^3.7.1",
     "ngx-file-drop": "^14.0.2",
     "ngx-spinner": "^13.1.1",
