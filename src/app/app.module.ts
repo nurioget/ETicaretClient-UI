@@ -49,8 +49,8 @@ import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, So
             provider: new GoogleLoginProvider("115110549393-4q0370nef250l52cd7in339s24tlsni4.apps.googleusercontent.com")
           },
           {
-            id:FacebookLoginProvider.PROVIDER_ID,
-            provider:new FacebookLoginProvider("8277986858900566")
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider("8277986858900566")
           }
         ],
         onError: err => console.log(err)
