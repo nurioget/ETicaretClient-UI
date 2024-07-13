@@ -35,7 +35,7 @@ export class ListComponent extends BasketsComponent implements OnInit {
 
   async getProducts() {
     this.showSpinner(SpinnerType.BallAtom)
-    const allPoroducts: { totalCount: number; products: List_Product[] } = await this.productService.read(this.paginator ? this.paginator.pageIndex : 0
+    const allPoroducts: { totalProductCount: number; products: List_Product[] } = await this.productService.read(this.paginator ? this.paginator.pageIndex : 0
       , this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerType.BallAtom),
       errorMessage => this.alertifyService.message(errorMessage, {
         dismissOthers: true,
@@ -43,7 +43,7 @@ export class ListComponent extends BasketsComponent implements OnInit {
         position: Position.BottomRight
       }))
     this.dataSource = new MatTableDataSource<List_Product>(allPoroducts.products);
-    this.paginator.length = allPoroducts.totalCount;
+    this.paginator.length = allPoroducts.totalProductCount;
   }
   addProductImages(id: string) {
     this.dialogService.openDialog({
