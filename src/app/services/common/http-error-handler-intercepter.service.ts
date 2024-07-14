@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { CustomToastrService, TosterMessageType, TosterPosition } from '../ui/custom-toastr.service';
 import { UserAuthService } from './models/user-auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerType } from 'src/app/base/base.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,9 @@ import { UserAuthService } from './models/user-auth.service';
 export class HttpErrorHandlerIntercepterService implements HttpInterceptor {
 
   constructor(private toastrService: CustomToastrService,
-    private userAuthService: UserAuthService
+    private userAuthService: UserAuthService,
+    private router: Router,
+    private sipinner:NgxSpinnerService
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -18,14 +23,23 @@ export class HttpErrorHandlerIntercepterService implements HttpInterceptor {
     return next.handle(req).pipe(catchError(error => {
       switch (error.status) {
         case HttpStatusCode.Unauthorized:
-          this.toastrService.message("Bu işlemi yapmaya yetkiniz bulunmamaktadır!", "Yetkisiz işlem!", {
-            messageType: TosterMessageType.Warning,
-            position: TosterPosition.BottomFullWidth
-          });
-          console.log("ABC")
-         this.userAuthService.refreshTokenLogin(localStorage.getItem("refreshToken")).then(data=>{
 
-         });
+          const url = this.router.url;
+          if (url == "/products") {
+            this.toastrService.message("Seppete ürün eklemek için oturum açmanız gerekiyor","Oturum açınız!",{
+              messageType:TosterMessageType.Warning,
+              position:TosterPosition.TopRight
+            })
+          } 
+          else 
+            this.toastrService.message("Bu işlemi yapmaya yetkiniz bulunmamaktadır!", "Yetkisiz işlem!", {
+              messageType: TosterMessageType.Warning,
+              position: TosterPosition.BottomFullWidth
+            });
+          
+          this.userAuthService.refreshTokenLogin(localStorage.getItem("refreshToken")).then(data => {
+
+          });
           break;
         case HttpStatusCode.InternalServerError:
           this.toastrService.message("Sunucuya erişilmiyor!", "Sunucu hatası!", {
@@ -52,6 +66,7 @@ export class HttpErrorHandlerIntercepterService implements HttpInterceptor {
           });
           break;
       }
+      this.sipinner.hide(SpinnerType.BallAtom)
       return of(error);
     }));
   }

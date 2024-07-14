@@ -10,3 +10,4 @@ export class List_Product {
   productImageFiles?: List_Product_Image[];
   imagePath: string;
 }
+

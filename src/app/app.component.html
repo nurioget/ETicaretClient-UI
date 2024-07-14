@@ -17,22 +17,28 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" routerLink="products">Ürünler</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" routerLink="basket">Sepet</a>
+                            <a class="nav-link active" aria-current="page" routerLink="register"
+                                *ngIf="!authService.isAuthenticated">Kayıt Ol</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" routerLink="register" *ngIf="!authService.isAuthenticated">Kayıt Ol</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" routerLink="login" *ngIf="!authService.isAuthenticated">Giriş Yap</a>
+                            <a class="nav-link active" aria-current="page" routerLink="login"
+                                *ngIf="!authService.isAuthenticated">Giriş Yap</a>
                         </li>
                         <li>
-                            <a class="nav-link active" aria-current="page" style="color: red; cursor: pointer;"  (click)="signOut()" *ngIf="authService.isAuthenticated">Çıkış Yap</a>
+                            <a class="nav-link active" aria-current="page" style="color:red;cursor:pointer;"
+                                (click)="signOut()" *ngIf="authService.isAuthenticated">Çıkış Yap</a>
                         </li>
                         <li>
-                            <a routerLink="admin" class="btn btn-outline-success" type="submit" *ngIf="authService.isAuthenticated">Yönetim Paneli</a>
+                            <a routerLink="admin" class="btn btn-outline-success" type="submit"
+                                *ngIf="authService.isAuthenticated">Yönetim Paneli</a>
                         </li>
-                    </ul>      
+                    </ul>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            type="submit">Sepet</button>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -50,3 +56,6 @@
 <ngx-spinner size="default" name="s1" type="ball-atom"></ngx-spinner>
 <ngx-spinner size="default" name="s2" type="ball-scale-multiple"></ngx-spinner>
 <ngx-spinner size="default" name="s3" type="ball-spin-clockwise-fade-rotating"></ngx-spinner>
+
+
+<app-baskets></app-baskets>

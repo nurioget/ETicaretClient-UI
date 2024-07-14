@@ -5,6 +5,7 @@ import { log } from 'console';
 import { AuthService } from './services/common/auth.service';
 import { Router } from '@angular/router';
 
+
 declare var $: any
 
 @Component({
@@ -15,7 +16,7 @@ declare var $: any
 export class AppComponent {
   constructor(public authService: AuthService,
     private toastrService: CustomToastrService,
-    private router: Router
+    private router: Router,
   ) {
     authService.identityCheck();
   }
