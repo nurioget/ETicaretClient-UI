@@ -37,7 +37,7 @@
                     </ul>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                            type="submit">Sepet</button>
+                            (click)="loadComponent()" type="submit">Sepet</button>
                     </div>
                 </div>
             </div>
@@ -58,4 +58,9 @@
 <ngx-spinner size="default" name="s3" type="ball-spin-clockwise-fade-rotating"></ngx-spinner>
 
 
-<app-baskets></app-baskets>
+<!-- <app-baskets></app-baskets> -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <ng-template appDynamicLoadComponent></ng-template>
+    </div>
+</div>
