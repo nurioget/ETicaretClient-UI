@@ -3,6 +3,7 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { HttpClientService } from '../http-client.service';
 import { Create_Order } from 'src/app/contracts/Order/Create_Order';
 import { List_Order } from 'src/app/contracts/Order/List_order';
+import { SingleOrder } from 'src/app/contracts/Order/single_order';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,19 @@ export class OrderService {
     const promiseData = firstValueFrom(observable);
     promiseData.then(value => successCallBack())
       .catch(error => errorCallBack(error));
+
+    return await promiseData;
+  }
+
+
+  async getOrderById(id: string, successCallBack?: () => void, errorCallBack?: (errorMessage: string) => void) {
+    const observable: Observable<SingleOrder> = this.httpCLientService.get<SingleOrder>({
+      controller: "orders"
+    }, id);
+
+    const promiseData = firstValueFrom(observable);
+    promiseData.then(value => successCallBack())
+      .catch(error => errorCallBack(error))
 
     return await promiseData;
   }
