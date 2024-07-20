@@ -1,8 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SingleOrder } from '../../contracts/Order/single_order';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { async } from 'rxjs';
+import { SpinnerType } from '../../base/base.component';
+import { DialogService } from '../../services/common/dialog.service';
 import { OrderService } from '../../services/common/models/order.service';
 import { BaseDialog } from '../base/base-dialog';
+import { CompleteOrderDialogComponent, CompleteOrderState } from '../complete-order-dialog/complete-order-dialog.component';
+import { CustomToastrService, TosterMessageType, TosterPosition } from 'src/app/services/ui/custom-toastr.service';
+import { SingleOrder } from 'src/app/contracts/Order/single_order';
 
 @Component({
   selector: 'app-order-detail-dialog',
@@ -14,7 +20,10 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
   constructor(
     dialogRef: MatDialogRef<OrderDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: OrderDetailDialogState | string,
-    private orderService: OrderService) {
+    private orderService: OrderService,
+    private dialogService: DialogService,
+    private spinner: NgxSpinnerService,
+    private toastrService: CustomToastrService) {
     super(dialogRef)
   }
 
@@ -32,8 +41,23 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
     this.totalPrice = this.singleOrder.basketItems.map((basketItem, index) => basketItem.price * basketItem.quantity).reduce((price, current) => price + current);
   }
 
-}
+  completeOrder() {
+    this.dialogService.openDialog({
+      componnentType: CompleteOrderDialogComponent,
+      data: CompleteOrderState.Yes,
+      afterClosed: async () => {
+        this.spinner.show(SpinnerType.BallAtom)
+        await this.orderService.completeOrder(this.data as string);
+        this.spinner.hide(SpinnerType.BallAtom)
+        this.toastrService.message("Sipariş başarıyla tamamlanmıştır! Müşteriye bilgi verilmiştir.", "Sipariş Tamamlandı!", {
+          messageType: TosterMessageType.Success,
+          position: TosterPosition.TopRight
+        });
+      }
+    });
+  }
 
+}
 
 export enum OrderDetailDialogState {
   Close, OrderComplete
