@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { Create_User } from '../../../contracts/users/create_user';
 import { User } from '../../../entities/user';
 import { UserService } from '../../../services/common/models/user.service';
-import { CustomToastrService, TosterMessageType, TosterPosition } from '../../../services/ui/custom-toastr.service';
+import { CustomToastrService , ToastrMessageType, ToastrPosition } from '../../../services/ui/custom-toastr.service';
 import { BaseComponent } from 'src/app/base/base.component';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 
@@ -16,7 +16,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
      private userService: UserService, 
-     private toastrService: CustomToastrService,
+     private toastrService: CustomToastrService ,
      spinner:NgxSpinnerService
     
   ) { super(spinner)}
@@ -71,13 +71,13 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     const result: Create_User = await this.userService.create(user);
     if (result.succeeded)
       this.toastrService.message(result.message, "Kullanıcı Kaydı Başarılı", {
-        messageType: TosterMessageType.Success,
-        position: TosterPosition.BottomRight
+        messageType: ToastrMessageType.Success,
+        position: ToastrPosition.BottomRight
       })
     else
       this.toastrService.message(result.message, "Hata", {
-        messageType: TosterMessageType.Error,
-        position: TosterPosition.BottomRight
+        messageType: ToastrMessageType.Error,
+        position: ToastrPosition.BottomRight
       })
   }
 }

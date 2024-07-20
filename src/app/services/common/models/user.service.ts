@@ -7,13 +7,13 @@ import { TokenResponse } from '../../../contracts/token/tokenResponse';
 import { Create_User } from '../../../contracts/users/create_user';
 import { User } from '../../../entities/user';
 import { HttpClientService } from '../http-client.service';
-import { CustomToastrService } from '../../ui/custom-toastr.service';
+import { CustomToastrService  } from '../../ui/custom-toastr.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private httpClientService: HttpClientService, private toastrService: CustomToastrService) { }
+  constructor(private httpClientService: HttpClientService, private toastrService: CustomToastrService ) { }
 
   async create(user: User): Promise<Create_User> {
     const observable: Observable<Create_User | User> = this.httpClientService.post<Create_User | User>({

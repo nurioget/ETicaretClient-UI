@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { SpinnerType } from 'src/app/base/base.component';
 import { _isAuthenticated, AuthService } from 'src/app/services/common/auth.service';
-import { CustomToastrService, TosterMessageType, TosterPosition } from 'src/app/services/ui/custom-toastr.service';
+import { CustomToastrService , ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
 
   constructor(private jwtHelper: JwtHelperService,
     private router: Router,
-    private toastrService: CustomToastrService,
+    private toastrService: CustomToastrService ,
     private spinner: NgxSpinnerService,
   ) {
 
@@ -36,8 +36,8 @@ export class AuthGuard implements CanActivate {
     if (!_isAuthenticated) {
       this.router.navigate(["login"], { queryParams: { returnUrl: state.url } });
       this.toastrService.message("Oturum açmanız gerekiyor", "Yetkisiz erişim!", {
-        messageType: TosterMessageType.Warning,
-        position: TosterPosition.BottomRight
+        messageType: ToastrMessageType.Warning,
+        position: ToastrPosition.BottomRight
       });
     }
     this.spinner.hide(SpinnerType.BallAtom);

@@ -8,7 +8,7 @@ import { List_Product } from 'src/app/contracts/list_products';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BasketService } from 'src/app/services/common/models/basket.service';
-import { CustomToastrService, TosterMessageType, TosterPosition } from 'src/app/services/ui/custom-toastr.service';
+import { CustomToastrService , ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import { Create_Basket_Item } from 'src/app/contracts/basket/create_basket_item';
 
 @Component({
@@ -23,7 +23,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     private fileService: FileService,
     private basketService: BasketService,
     spinner: NgxSpinnerService,
-    private customToastrService: CustomToastrService) {
+    private customToastrService: CustomToastrService ) {
     super(spinner)
   }
   currentPageNo: number;
@@ -93,8 +93,8 @@ export class ListComponent extends BaseComponent implements OnInit {
     await this.basketService.add(_basketItem);
     this.hideSpinner(SpinnerType.BallAtom);
     this.customToastrService.message("Ürün sepete eklenmiştir.", "Sepete Eklendi", {
-      messageType: TosterMessageType.Success,
-      position: TosterPosition.TopRight
+      messageType: ToastrMessageType.Success,
+      position: ToastrPosition.TopRight
     });
   }
 }

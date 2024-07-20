@@ -8,26 +8,26 @@ export class CustomToastrService {
 
   constructor(private toastr: ToastrService) { }
 
-  message(message: string, title: string, tosterOptions:Partial<TosterOptions>) {
+  message(message: string, title: string, tosterOptions:Partial<ToastrOptions>) {
     this.toastr[tosterOptions.messageType](message, title,{
       positionClass:tosterOptions.position
     });
   }
 }
 
-export enum TosterMessageType {
+export enum ToastrMessageType {
   Success = "success",
   Info = "info",
   Warning = "warning",
   Error = "error"
 }
-export class TosterOptions{
-  messageType: TosterMessageType;
-  position: TosterPosition;
+export class ToastrOptions{
+  messageType: ToastrMessageType;
+  position: ToastrPosition;
 }
 
 
-export enum TosterPosition {
+export enum ToastrPosition {
   TopRight ="toast-top-right",
   BottomRight="toast-bottom-right",
   BottomLeft="toast-botom-left",

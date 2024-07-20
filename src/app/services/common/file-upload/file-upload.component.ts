@@ -5,7 +5,7 @@ import { AlertifyService, MessageType, Position } from '../../admin/alertify.ser
 
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CustomToastrService, TosterMessageType, TosterPosition } from '../../ui/custom-toastr.service';
+import { CustomToastrService , ToastrMessageType, ToastrPosition } from '../../ui/custom-toastr.service';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { SpinnerType } from 'src/app/base/base.component';
 import { FileUploadDialogComponent, FileUploadDialogState } from 'src/app/dialogs/file-upload-dialog/file-upload-dialog.component';
@@ -20,7 +20,7 @@ export class FileUploadComponent {
   constructor(
     private httpClientService: HttpClientService,
     private alertifyService: AlertifyService,
-    private customToastrService: CustomToastrService,
+    private customToastrService: CustomToastrService ,
     private dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private dialogService: DialogService,
@@ -62,8 +62,8 @@ export class FileUploadComponent {
               })
           } else {
             this.customToastrService.message(message, "Başarılı.", {
-              messageType: TosterMessageType.Success,
-              position: TosterPosition.TopRight
+              messageType: ToastrMessageType.Success,
+              position: ToastrPosition.TopRight
             })
           }
           
@@ -83,8 +83,8 @@ export class FileUploadComponent {
               })
           } else {
             this.customToastrService.message(message, "Başarsız.", {
-              messageType: TosterMessageType.Error,
-              position: TosterPosition.TopRight
+              messageType: ToastrMessageType.Error,
+              position: ToastrPosition.TopRight
             })
           }
 

@@ -7,7 +7,7 @@ import { DialogService } from '../../services/common/dialog.service';
 import { OrderService } from '../../services/common/models/order.service';
 import { BaseDialog } from '../base/base-dialog';
 import { CompleteOrderDialogComponent, CompleteOrderState } from '../complete-order-dialog/complete-order-dialog.component';
-import { CustomToastrService, TosterMessageType, TosterPosition } from 'src/app/services/ui/custom-toastr.service';
+import { CustomToastrService , ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import { SingleOrder } from 'src/app/contracts/Order/single_order';
 
 @Component({
@@ -23,7 +23,7 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
     private orderService: OrderService,
     private dialogService: DialogService,
     private spinner: NgxSpinnerService,
-    private toastrService: CustomToastrService) {
+    private toastrService: CustomToastrService ) {
     super(dialogRef)
   }
 
@@ -50,8 +50,8 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
         await this.orderService.completeOrder(this.data as string);
         this.spinner.hide(SpinnerType.BallAtom)
         this.toastrService.message("Sipariş başarıyla tamamlanmıştır! Müşteriye bilgi verilmiştir.", "Sipariş Tamamlandı!", {
-          messageType: TosterMessageType.Success,
-          position: TosterPosition.TopRight
+          messageType: ToastrMessageType.Success,
+          position: ToastrPosition.TopRight
         });
       }
     });

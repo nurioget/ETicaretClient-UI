@@ -6,7 +6,7 @@ import { Update_Basket_Item } from '../../../contracts/basket/update_basket_item
 import { BasketService } from '../../../services/common/models/basket.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
 import { Create_Order } from 'src/app/contracts/Order/Create_Order';
-import { CustomToastrService, TosterMessageType, TosterPosition } from 'src/app/services/ui/custom-toastr.service';
+import { CustomToastrService , ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import { MessageType } from '@microsoft/signalr';
 import { Route, Router } from '@angular/router';
 import { DialogService } from 'src/app/services/common/dialog.service';
@@ -26,7 +26,7 @@ export class BasketsComponent extends BaseComponent implements OnInit {
   constructor(spinner: NgxSpinnerService,
     private basketService: BasketService,
     private orderService: OrderService,
-    private toastrService: CustomToastrService,
+    private toastrService: CustomToastrService ,
     private router: Router,
     private dialogService: DialogService) {
     super(spinner)
@@ -81,8 +81,8 @@ export class BasketsComponent extends BaseComponent implements OnInit {
         await this.orderService.create(order);
         this.hideSpinner(SpinnerType.BallAtom);
         this.toastrService.message("Sipariş alınmıştır!", "Sipariş Oluşturuldu!", {
-          messageType: TosterMessageType.Info,
-          position: TosterPosition.TopRight
+          messageType: ToastrMessageType.Info,
+          position: ToastrPosition.TopRight
         })
         this.router.navigate(["/"]);
       }

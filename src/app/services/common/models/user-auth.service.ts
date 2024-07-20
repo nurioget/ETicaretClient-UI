@@ -4,13 +4,13 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { TokenResponse } from '../../../contracts/token/tokenResponse';
 
 import { HttpClientService } from '../http-client.service';
-import { CustomToastrService, TosterMessageType, TosterPosition } from '../../ui/custom-toastr.service';
+import { CustomToastrService , ToastrMessageType, ToastrPosition } from '../../ui/custom-toastr.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
-  constructor(private httpClientService: HttpClientService, private toastrService: CustomToastrService) { }
+  constructor(private httpClientService: HttpClientService, private toastrService: CustomToastrService ) { }
 
   async login(userNameOrEmail: string, password: string, callBackFunction?: () => void): Promise<any> {
     const observable: Observable<any | TokenResponse> = this.httpClientService.post<any | TokenResponse>({
@@ -25,8 +25,8 @@ export class UserAuthService {
       localStorage.setItem("refreshToken", tokenResponse.token.refreshToken);
 
       this.toastrService.message("Kullanıcı girişi başarıyla sağlanmıştır.", "Giriş Başarılı", {
-        messageType: TosterMessageType.Success,
-        position: TosterPosition.TopRight
+        messageType: ToastrMessageType.Success,
+        position: ToastrPosition.TopRight
       })
     }
 
@@ -66,8 +66,8 @@ export class UserAuthService {
       localStorage.setItem("refreshToken", tokenResponse.token.refreshToken);
 
       this.toastrService.message("Google üzerinden giriş başarıyla sağlanmıştır.", "Giriş Başarılı", {
-        messageType: TosterMessageType.Success,
-        position: TosterPosition.TopRight
+        messageType: ToastrMessageType.Success,
+        position: ToastrPosition.TopRight
       });
     }
 
@@ -87,8 +87,8 @@ export class UserAuthService {
       localStorage.setItem("refreshToken", tokenResponse.token.refreshToken);
 
       this.toastrService.message("Facebook üzerinden giriş başarıyla sağlanmıştır.", "Giriş Başarılı", {
-        messageType: TosterMessageType.Success,
-        position: TosterPosition.TopRight
+        messageType: ToastrMessageType.Success,
+        position: ToastrPosition.TopRight
       })
     }
 

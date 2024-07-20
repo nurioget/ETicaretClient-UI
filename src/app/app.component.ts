@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { CustomToastrService, TosterMessageType, TosterPosition } from './services/ui/custom-toastr.service';
+import { CustomToastrService , ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 import { log } from 'console';
 import { AuthService } from './services/common/auth.service';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ export class AppComponent {
   dynamicLoadComponentDirective: DynamicLoadComponentDirective;
 
   constructor(public authService: AuthService,
-    private toastrService: CustomToastrService,
+    private toastrService: CustomToastrService ,
     private router: Router,
     private dynamicLoadComponentService: DynamicLoadComponentService
   ) {
@@ -32,8 +32,8 @@ export class AppComponent {
     this.authService.identityCheck();
     this.router.navigate([""])
     this.toastrService.message("Oturum kapatılmıştır!", "Oturum Kapatıldı", {
-      messageType: TosterMessageType.Warning,
-      position: TosterPosition.TopRight
+      messageType: ToastrMessageType.Warning,
+      position: ToastrPosition.TopRight
     });
   }
 
