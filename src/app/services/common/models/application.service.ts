@@ -14,7 +14,6 @@ export class ApplicationService {
     const observable: Observable<Menu[]> = this.httpClientService.get<Menu[]>({
       controller: "ApplicationServices"
     });
-debugger
     return await firstValueFrom(observable);
   }
 }
