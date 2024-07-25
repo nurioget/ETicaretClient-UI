@@ -15,7 +15,7 @@ export class HttpErrorHandlerIntercepterService implements HttpInterceptor {
   constructor(private toastrService: CustomToastrService ,
     private userAuthService: UserAuthService,
     private router: Router,
-    private sipinner:NgxSpinnerService
+    private spinner:NgxSpinnerService
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -24,21 +24,25 @@ export class HttpErrorHandlerIntercepterService implements HttpInterceptor {
       switch (error.status) {
         case HttpStatusCode.Unauthorized:
 
-          const url = this.router.url;
-          if (url == "/products") {
-            this.toastrService.message("Seppete ürün eklemek için oturum açmanız gerekiyor","Oturum açınız!",{
-              messageType:ToastrMessageType.Warning,
-              position:ToastrPosition.TopRight
-            })
-          } 
-          else 
+          this.userAuthService.refreshTokenLogin(localStorage.getItem("refreshToken"), (state) => {
+            if (!state) {
+              const url = this.router.url;
+              if (url == "/products")
+                this.toastrService.message("Sepete ürün eklemek için oturum açmanız gerekiyor.", "Oturum açınız!", {
+                  messageType: ToastrMessageType.Warning,
+                  position: ToastrPosition.TopRight
+                });
+              else
+                this.toastrService.message("Bu işlemi yapmaya yetkiniz bulunmamaktadır!", "Yetkisiz işlem!", {
+                  messageType: ToastrMessageType.Warning,
+                  position: ToastrPosition.BottomFullWidth
+                });
+            }
+          }).then(data => {
             this.toastrService.message("Bu işlemi yapmaya yetkiniz bulunmamaktadır!", "Yetkisiz işlem!", {
               messageType: ToastrMessageType.Warning,
               position: ToastrPosition.BottomFullWidth
             });
-          
-          this.userAuthService.refreshTokenLogin(localStorage.getItem("refreshToken")).then(data => {
-
           });
           break;
         case HttpStatusCode.InternalServerError:
@@ -66,7 +70,8 @@ export class HttpErrorHandlerIntercepterService implements HttpInterceptor {
           });
           break;
       }
-      this.sipinner.hide(SpinnerType.BallAtom)
+
+      this.spinner.hide(SpinnerType.BallAtom);
       return of(error);
     }));
   }
