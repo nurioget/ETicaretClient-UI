@@ -28,6 +28,7 @@
     "bootstrap": "^5.3.3",
     "jquery": "^3.7.1",
     "ngx-file-drop": "^14.0.2",
+    "ngx-scanner-qrcode": "^1.1.4",
     "ngx-spinner": "^13.1.1",
     "ngx-toastr": "^14.3.0",
     "popper.js": "^1.16.1",
