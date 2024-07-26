@@ -18,6 +18,7 @@ import { AuthorizeMenuDialogComponent } from './authorize-menu-dialog/authorize-
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import { AuthorizeUserDialogComponent } from './authorize-user-dialog/authorize-user-dialog.component';
+import { QrcodeDialogComponent } from './qrcode-dialog/qrcode-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AuthorizeUserDialogComponent } from './authorize-user-dialog/authorize-
     CompleteOrderDialogComponent,
     AuthorizeMenuDialogComponent,
     AuthorizeUserDialogComponent,
+    QrcodeDialogComponent,
   ],
   imports: [
     CommonModule,
